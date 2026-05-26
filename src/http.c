@@ -59,8 +59,9 @@ int parseHTTP(const char *raw, HttpRequest *req)
     char *method = strtok(buf, " ");
     char *uri = strtok(NULL, " ");
     char *version = strtok(NULL, " ");
+    const char *host = strstr(raw, "Host:");
 
-    if (method == NULL || uri == NULL || version == NULL)
+    if (method == NULL || uri == NULL || version == NULL || host == NULL)
         return -1;
 
     // Validamos el tamaño de la URI
@@ -73,10 +74,10 @@ int parseHTTP(const char *raw, HttpRequest *req)
     req->uri[sizeof(req->uri) - 1] = '\0';
 
     // Se busca el header de Connection y se verifica el Keep alive
-    req->keep_alive = 0;
+    req->keep_alive = 1; 
     const char *conn = strstr(raw, "Connection:");
-    if (conn != NULL && strstr(conn, "keep-alive") != NULL)
-        req->keep_alive = 1;
+    if (conn != NULL && strstr(conn, "close") != NULL)
+        req->keep_alive = 0;
 
     return 0;
 }
