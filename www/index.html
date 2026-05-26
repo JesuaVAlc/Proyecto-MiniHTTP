@@ -2,12 +2,35 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Proyecto MiniHTTP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniHTTPd - Panel de Control</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Proyecto MiniHTTP</h1>
-    <p>Esta es una prueba de funcionamiento de la página</p>
-    <!-- <img src="image.png" alt="logo"> -->
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <img src="image.jpg" alt="epn" class="card-logo">
+                <h1>MiniHTTPd Core</h1>
+                <span class="badge">HTTP/1.1</span>
+            </div>
+            
+            <div class="card-body">
+                <h2>Servidor MiniHTTP</h2>
+                <div class="specs-box">
+                    <h3>Especificaciones del Módulo</h3>
+                    <ul>
+                        <li><strong>Concurrencia:</strong> Eficiencia asíncrona O(1) con Epoll</li>
+                        <li><strong>Seguridad:</strong> Mitigación de Directory Traversal vía realpath()</li>
+                        <li><strong>Persistencia:</strong> Gestión activa de cabeceras Connection</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <p>Estado del Servidor: <span class="status-online">● En Línea</span></p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

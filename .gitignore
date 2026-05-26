@@ -1,0 +1,17 @@
+build/
+*.o 
+*.a
+*.so
+
+*~
+.vscode/
+*.save
+*.log
+
+.DS_Store
+Thumbs.db
+
+*.bak
+
+core
+core.*
