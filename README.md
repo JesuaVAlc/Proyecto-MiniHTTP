@@ -5,6 +5,7 @@ Servidor HTTP/1.1 basico implementado en C para Linux. Sirve archivos estaticos 
 con epoll, sin librerias HTTP externas.
 
 ## Estructura
+'''
 minihttpd/
 ├── Makefile
 ├── include/
@@ -24,3 +25,4 @@ minihttpd/
 ├── index.html
 ├── style.css
 └── image.png
+'''
