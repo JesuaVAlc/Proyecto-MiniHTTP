@@ -4,6 +4,7 @@
 typedef struct {
     char method[16];
     char uri[2048];
+    char user_agent[512];
     int  keep_alive;
 } HttpRequest;
 

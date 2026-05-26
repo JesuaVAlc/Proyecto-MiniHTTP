@@ -38,16 +38,16 @@ static void sendError(int fd, int code, const char *msg)
 // Método que analiza la peticion
 int parseHTTP(const char *raw, HttpRequest *req)
 {
-    // Se realiza una copia del buffer
     char buf[BUF_SIZE];
-    strncpy(buf, raw, sizeof(buf) - 1);
-    buf[sizeof(buf) - 1] = '\0';
-
-    // Se verifica que no se haya sobrepasado el buffer
+    // Verificar si se ha excedido el tamaño del buffer
     if (strlen(raw) >= BUF_SIZE)
     {
-        return -1; // 400
+        return -1;
     }
+
+    // Se realiza una copia del buffer
+    strncpy(buf, raw, sizeof(buf) - 1);
+    buf[sizeof(buf) - 1] = '\0';
 
     // Se extrae la primera linea que sera la que contiene el metodo y la uri
     char *line_end = strstr(buf, "\r\n");
@@ -73,8 +73,29 @@ int parseHTTP(const char *raw, HttpRequest *req)
     req->method[sizeof(req->method) - 1] = '\0';
     req->uri[sizeof(req->uri) - 1] = '\0';
 
+    //Verificar User-Agent del encabezado
+    const char *ua_ptr = strstr(raw, "User-Agent:");
+    if (ua_ptr != NULL)
+    {
+        ua_ptr += 11; 
+        while (*ua_ptr == ' ')
+            ua_ptr++;
+
+        int i = 0;
+        while (ua_ptr[i] != '\r' && ua_ptr[i] != '\n' && ua_ptr[i] != '\0' && i < 511)
+        {
+            req->user_agent[i] = ua_ptr[i];
+            i++;
+        }
+        req->user_agent[i] = '\0';
+    }
+    else
+    {
+        strcpy(req->user_agent, "Unknown");
+    }
+
     // Se busca el header de Connection y se verifica el Keep alive
-    req->keep_alive = 1; 
+    req->keep_alive = 1;
     const char *conn = strstr(raw, "Connection:");
     if (conn != NULL && strstr(conn, "close") != NULL)
         req->keep_alive = 0;
